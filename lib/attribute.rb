@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Attribute
-  attr_reader :method, :conditional_proc
+  attr_reader :method
 
-  def initialize(method:, options: {})
+  def initialize(method:)
     @method = method
-    @conditional_proc = options[:if]
   end
 
   def serialize(record)
-    # Check if proc condition is met
     record.public_send(method)
   end
 end
+
+# TODO: Check if proc condition is met
