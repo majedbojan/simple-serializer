@@ -30,7 +30,7 @@ class SimpleSerializer
   # end
 
   def serializable_hash
-    collection? ? hashlize_for_collection : hashlize_for_one_record.deep_stringify_keys
+    collection? ? hashlize_for_collection.each(&:deep_stringify_keys) : hashlize_for_one_record.deep_stringify_keys
   end
 
   def hashlize_for_collection
