@@ -18,6 +18,41 @@ bin/setup
 bin/console
 ```
 
+```ruby
+guest = Guest.new('1', 'John', 'Doe')
+Api::V1::GuestSerializer.new(guest).as_json # {"id"=>"1", "last_name"=>"Doe", "first_name"=>"John"}
+```
+
+```ruby
+reservation =
+  Reservation.new(
+    '1',
+    'not_confirmed',
+    2,
+    false,
+    Time.now,
+    5400,
+    nil,
+    Guest.new('1', 'John', 'Doe'),
+    Restaurant.new('1', 'Restaurant 1', '123 Main St'),
+    [Table.new('1', 1, 4)]
+  )
+
+Api::V1::ReservationSerializer.new(reservation).as_json #  "guest"=>{"id"=>"1", "last_name"=>"Doe", "first_name"=>"John"}, "restaurant"=>{"id"=>"1", "name"=>"Restaurant 1", "address"=>"123 Main St"}, "updated_at"=>"2022-03-06T23:27:21+02:00",  "created_at"=>"2022-03-06T23:27:21+02:00",  "notes"=>nil,  "duration"=>5400,  "start_time"=>"2022-03-06T23:26:37+02:00",  "walk_in"=>false,  "covers"=>2,  "status"=>"not_confirmed", {"id"=>"1","tables"=>[{"id"=>"1", "number"=>1, "max_covers"=>4}]}
+```
+
+```ruby
+restaurant = Restaurant.new('1', 'The Aviary', '1313 Mockingbird Lane')
+Api::V1::RestaurantSerializer.new(restaurant).as_json # {"id"=>"1", "name"=>"The Aviary", "address"=>"1313 Mockingbird Lane"}
+```
+
+```ruby
+table = Table.new('1', 5, 10)
+Api::V1::TableSerializer.new(table).as_json
+
+# {"id"=>"1", "number"=>5, "max_covers"=>10}
+```
+
 ### Test cases
 
 ```powershell
