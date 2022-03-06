@@ -7,7 +7,7 @@ module Api
                  :name,
                  :address
       def address
-        # address.presence
+        object.address if object.address.to_s.length.positive?
       end
     end
   end

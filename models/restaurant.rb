@@ -6,10 +6,10 @@ Restaurant = Struct.new(:id, :name, :address) do
   end
 
   def created_at
-    Time.current
+    Time.now
   end
 
   def updated_at
-    Time.current
+    Time.now
   end
 end

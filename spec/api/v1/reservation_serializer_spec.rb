@@ -11,6 +11,13 @@ describe Api::V1::ReservationSerializer do
                     [Table.new('1', 1, 4)])
   end
 
+  let(:reservations) do
+    [reservation, Reservation.new('2', 'confirmed', 2, false, Time.now, 5400, nil,
+                                  Guest.new('2', 'Jack2', 'Doew'),
+                                  Restaurant.new('2', 'Restaurant 2', '123 Main St'),
+                                  [Table.new('2', 1, 4)])]
+  end
+
   let(:serializer) { described_class.new(reservation) }
 
   it 'allows attributes to be defined for serialization' do
@@ -70,6 +77,18 @@ describe Api::V1::ReservationSerializer do
         'created_at' => reservation.created_at.iso8601,
         'updated_at' => reservation.updated_at.iso8601
       )
+    end
+  end
+
+  describe '#collections' do
+    subject { described_class.new(reservations).as_json }
+
+    it 'returns an array of serialized objects' do
+      expect(subject).to be_an_instance_of(Array)
+    end
+
+    it 'returns two objects' do
+      expect(subject.count).to eq(2)
     end
   end
 end

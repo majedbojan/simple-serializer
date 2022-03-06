@@ -6,10 +6,10 @@ Guest = Struct.new(:id, :first_name, :last_name) do
   end
 
   def created_at
-    Time.current
+    Time.now
   end
 
   def updated_at
-    Time.current
+    Time.now
   end
 end

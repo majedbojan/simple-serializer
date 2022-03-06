@@ -19,32 +19,6 @@ require_relative './api/v1/restaurant_serializer'
 # end
 
 class Hash
-  # def stringify_keys
-  #   transform_keys(&:to_s)
-  # end
-
-  # def stringify_keys!
-  #   transform_keys!(&:to_s)
-  # end
-
-  # def symbolize_keys
-  #   transform_keys do |key|
-  #     key.to_sym
-  #   rescue StandardError
-  #     key
-  #   end
-  # end
-  # alias to_options symbolize_keys
-
-  # def symbolize_keys!
-  #   transform_keys! do |key|
-  #     key.to_sym
-  #   rescue StandardError
-  #     key
-  #   end
-  # end
-  # alias to_options! symbolize_keys!
-
   def deep_transform_keys(&block)
     _deep_transform_keys_in_object(self, &block)
   end

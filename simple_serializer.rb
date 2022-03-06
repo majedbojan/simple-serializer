@@ -5,7 +5,7 @@ require_relative './lib/association'
 require_relative './application'
 
 class SimpleSerializer
-  attr_reader :resource
+  attr_reader :resource, :object
 
   class << self
     attr_accessor :attrs_to_serialize, :associations_to_serialize
@@ -14,20 +14,17 @@ class SimpleSerializer
   def initialize(resource, options = {})
     @resource = resource
     @options  = options
-  end
-
-  def object
-    resource
+    @object = resource unless resource.is_a?(Array)
   end
 
   def as_json
-    # debugger
     collection? ? hashlize_for_collection.map(&:deep_stringify_keys) : hashlize_for_one_record.deep_stringify_keys
   end
 
   def hashlize_for_collection
     resource.map do |record|
-      attribute_serialization(record).merge(association_serialization)
+      @object = record
+      attribute_serialization(record).merge(association_serialization(record))
     end
   end
 
@@ -50,22 +47,25 @@ class SimpleSerializer
     end
   end
 
-  def association_serialization
+  def association_serialization(record = nil)
     return {} if self.class.associations_to_serialize.nil?
 
+    record ||= resource
+
     self.class.associations_to_serialize.transform_values do |association|
-      association.serialize(resource)
+      association.serialize(record)
     end
   end
 
   def self.attributes(*attrs_list)
     self.attrs_to_serialize = {} if attrs_to_serialize.nil?
     attrs_list.each do |attr_name|
-      attrs_to_serialize[attr_name] = Attribute.new(method: attr_name) # , :block)
+      attrs_to_serialize[attr_name] = Attribute.new(method: attr_name)
     end
   end
 
   # Associations
+  # rubocop:disable Naming/PredicateName
   def self.has_many(association_name, options = {}, &block)
     association = create_association(association_name, options, block)
     add_association(association)
@@ -80,6 +80,7 @@ class SimpleSerializer
     association = create_association(association_name, options, block)
     add_association(association)
   end
+  # rubocop:enable Naming/PredicateName
 
   def self.create_association(name, options, _block)
     Association.new(name: name, options: options)

@@ -6,10 +6,10 @@ Table = Struct.new(:id, :number, :max_covers) do
   end
 
   def created_at
-    Time.current
+    Time.now
   end
 
   def updated_at
-    Time.current
+    Time.now
   end
 end

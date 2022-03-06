@@ -14,7 +14,7 @@ describe Api::V1::RestaurantSerializer do
     )
   end
 
-  describe 'when a collection' do
+  describe '#collections' do
     subject { described_class.new(restaurants).as_json }
 
     it 'returns an array of serialized objects' do
