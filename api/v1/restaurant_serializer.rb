@@ -7,7 +7,7 @@ module Api
                  :name,
                  :address
       def address
-        object.address.presence
+        # address.presence
       end
     end
   end

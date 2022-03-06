@@ -10,6 +10,9 @@ class Attribute
 
   def serialize(record)
     # Check if proc condition is met
-    record[method]
+    # Check for updated and created at methods
+    # debugger
+    # record[method]
+    record.public_send(method)
   end
 end

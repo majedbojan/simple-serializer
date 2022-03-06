@@ -5,19 +5,12 @@ require 'spec_helper'
 describe Api::V1::ReservationSerializer do
   subject { serializer.as_json }
   let(:reservation) do
-    Reservation.new(
-      id:         '1',
-      status:     'confirmed',
-      covers:     2,
-      walk_in:    false,
-      start_time: Time.now,
-      duration:   30,
-      notes:      '',
-      guest:      Guest.new(id: '1', first_name: 'John', last_name: 'Doe'),
-      restaurant: Restaurant.new(id: '1', name: 'Restaurant 1', address: '123 Main St'),
-      tables:     [Table.new(id: '1', number: 1, max_covers: 4)]
-    )
+    Reservation.new('1', 'not_confirmed', 2, false, Time.now, 5400, nil,
+                    Guest.new('1', 'John', 'Doe'),
+                    Restaurant.new('1', 'Restaurant 1', '123 Main St'),
+                    [Table.new('1', 1, 4)])
   end
+
   let(:serializer) { described_class.new(reservation) }
 
   it 'allows attributes to be defined for serialization' do
@@ -41,7 +34,7 @@ describe Api::V1::ReservationSerializer do
 
   describe 'relationships' do
     it 'returns single restaurant' do
-      data = API::V1::RestaurantSerializer.new(reservation.restaurant).as_json.deep_stringify_keys
+      data = Api::V1::RestaurantSerializer.new(reservation.restaurant).as_json.deep_stringify_keys
       expect(subject['restaurant']).to eq(data)
     end
 
@@ -51,8 +44,9 @@ describe Api::V1::ReservationSerializer do
     end
 
     it 'returns array of tables' do
-      data = reservation.tables.map { API::V1::TableSerializer.new(_1).as_json }
-      expect(subject['tables']).to contain_exactly(data)
+      data = Api::V1::TableSerializer.new(reservation.tables).as_json
+      expect(subject['tables']).to contain_exactly(*data)
+      # expect(subject['tables']).to eq(data)
     end
   end
 

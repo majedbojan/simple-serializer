@@ -2,7 +2,7 @@
 
 Guest = Struct.new(:id, :first_name, :last_name) do
   def id
-    @id.presence || SecureRandom.uuid
+    self[:id] || SecureRandom.uuid
   end
 
   def created_at
@@ -13,5 +13,3 @@ Guest = Struct.new(:id, :first_name, :last_name) do
     Time.current
   end
 end
-
-# guest = Guest.new(1, 'John', 'Doe')

@@ -2,7 +2,7 @@
 
 Table = Struct.new(:id, :number, :max_covers) do
   def id
-    @id.presence || SecureRandom.uuid
+    self[:id] || SecureRandom.uuid
   end
 
   def created_at

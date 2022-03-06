@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# require_relative '../application'
+require 'time'
+require 'securerandom'
+
 require_relative './models/guest'
 require_relative './models/table'
 require_relative './models/restaurant'
@@ -10,34 +12,38 @@ require_relative './api/v1/guest_serializer'
 require_relative './api/v1/table_serializer'
 require_relative './api/v1/reservation_serializer'
 require_relative './api/v1/restaurant_serializer'
+# class Object
+#   def presence
+#     self if present?
+#   end
+# end
 
-# This class was
 class Hash
-  def stringify_keys
-    transform_keys(&:to_s)
-  end
+  # def stringify_keys
+  #   transform_keys(&:to_s)
+  # end
 
-  def stringify_keys!
-    transform_keys!(&:to_s)
-  end
+  # def stringify_keys!
+  #   transform_keys!(&:to_s)
+  # end
 
-  def symbolize_keys
-    transform_keys do |key|
-      key.to_sym
-    rescue StandardError
-      key
-    end
-  end
-  alias to_options symbolize_keys
+  # def symbolize_keys
+  #   transform_keys do |key|
+  #     key.to_sym
+  #   rescue StandardError
+  #     key
+  #   end
+  # end
+  # alias to_options symbolize_keys
 
-  def symbolize_keys!
-    transform_keys! do |key|
-      key.to_sym
-    rescue StandardError
-      key
-    end
-  end
-  alias to_options! symbolize_keys!
+  # def symbolize_keys!
+  #   transform_keys! do |key|
+  #     key.to_sym
+  #   rescue StandardError
+  #     key
+  #   end
+  # end
+  # alias to_options! symbolize_keys!
 
   def deep_transform_keys(&block)
     _deep_transform_keys_in_object(self, &block)
@@ -102,59 +108,3 @@ class Hash
     end
   end
 end
-
-# Reservation = Struct.new(:id, :status, :covers, :walk_in, :start_time, :duration, :notes, :guest, :restaurant, :tables) do
-#   def id
-#     @id.presence || SecureRandom.uuid
-#   end
-
-#   def created_at
-#     Time.current
-#   end
-
-#   def updated_at
-#     Time.current
-#   end
-# end
-
-# Guest = Struct.new(:id, :first_name, :last_name) do
-#   def id
-#     @id.presence || SecureRandom.uuid
-#   end
-
-#   def created_at
-#     Time.current
-#   end
-
-#   def updated_at
-#     Time.current
-#   end
-# end
-
-# Table = Struct.new(:id, :number, :max_covers) do
-#   def id
-#     @id.presence || SecureRandom.uuid
-#   end
-
-#   def created_at
-#     Time.current
-#   end
-
-#   def updated_at
-#     Time.current
-#   end
-# end
-
-# Restaurant = Struct.new(:id, :name, :address) do
-#   def id
-#     @id.presence || SecureRandom.uuid
-#   end
-
-#   def created_at
-#     Time.current
-#   end
-
-#   def updated_at
-#     Time.current
-#   end
-# end

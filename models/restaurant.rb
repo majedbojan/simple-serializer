@@ -2,7 +2,7 @@
 
 Restaurant = Struct.new(:id, :name, :address) do
   def id
-    @id.presence || SecureRandom.uuid
+    self[:id] || SecureRandom.uuid
   end
 
   def created_at
