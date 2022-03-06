@@ -26,7 +26,7 @@ module Api
         Time.current
       end
 
-      def created_at
+      def updated_at
         Time.current
       end
     end
