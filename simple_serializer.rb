@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './lib/attribute'
-require_relative './lib/association'
 require_relative './application'
 
 class SimpleSerializer
@@ -89,5 +87,31 @@ class SimpleSerializer
   def self.add_association(association)
     self.associations_to_serialize = {} if associations_to_serialize.nil?
     associations_to_serialize[association.key] = association
+  end
+
+  class Association
+    attr_reader :key, :serializer
+
+    def initialize(name:, options: {})
+      @key = name
+      @serializer = options[:serializer]
+    end
+
+    def serialize(record)
+      association = record.public_send(key)
+      serializer ? serializer.new(association).as_json : association
+    end
+  end
+
+  class Attribute
+    attr_reader :method
+
+    def initialize(method:)
+      @method = method
+    end
+
+    def serialize(record)
+      record.public_send(method)
+    end
   end
 end

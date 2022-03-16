@@ -83,7 +83,6 @@ Finished in 0.00988 seconds (files took 0.1161 seconds to load)
 ├─ spec
 ```
 
-- **lib** - lib folder contains two classes to initialize the attributes as well as associations
 - **api/v1** - Serialization classes located in this path
 - **application** All the application dependencies in this ruby file
 - **simple_serializer** It's the base class for the project, it handles the logic to serialize or format objects all the classes in `api/v1` inherited from Simply Serializer class.
