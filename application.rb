@@ -3,20 +3,15 @@
 require 'time'
 require 'securerandom'
 
-require_relative './models/guest'
-require_relative './models/table'
-require_relative './models/restaurant'
-require_relative './models/reservation'
+require_relative './lib/models/guest'
+require_relative './lib/models/table'
+require_relative './lib/models/restaurant'
+require_relative './lib/models/reservation'
 
-require_relative './api/v1/guest_serializer'
-require_relative './api/v1/table_serializer'
-require_relative './api/v1/reservation_serializer'
-require_relative './api/v1/restaurant_serializer'
-# class Object
-#   def presence
-#     self if present?
-#   end
-# end
+require_relative './lib/api/v1/guest_serializer'
+require_relative './lib/api/v1/table_serializer'
+require_relative './lib/api/v1/reservation_serializer'
+require_relative './lib/api/v1/restaurant_serializer'
 
 class Hash
   def deep_transform_keys(&block)
